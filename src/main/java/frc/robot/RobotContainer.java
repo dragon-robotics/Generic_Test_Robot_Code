@@ -8,7 +8,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import frc.robot.subsystems.Limelight_Subsystem;
 import frc.robot.subsystems.MotorControllerSubsystem;
+import frc.robot.subsystems.NavXIMU_Subsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -22,6 +24,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final MotorControllerSubsystem m_motorControllerSubsystem = new MotorControllerSubsystem();
   private final PneumaticsSubsystem m_pneumaticsSubsystem = new PneumaticsSubsystem();
+  private final Limelight_Subsystem m_limelightSubsystem = new Limelight_Subsystem();
+  private final NavXIMU_Subsystem m_navXIMUSubsystem = new NavXIMU_Subsystem();
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.

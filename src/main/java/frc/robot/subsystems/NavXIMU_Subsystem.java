@@ -179,32 +179,32 @@ public class NavXIMU_Subsystem extends SubsystemBase {
 
   private void UpdateNavXData() {
     /* Display 6-axis Processed Angle Data */
-    imuConnected.setBoolean(ahrs.isConnected());
-    imuIsCalibrating.setBoolean(ahrs.isCalibrating());
-    imuYaw.setDouble(ahrs.getYaw());
-    imuPitch.setDouble(ahrs.getPitch());
-    imuRoll.setDouble(ahrs.getRoll());
+    imuConnected_nte.setBoolean(ahrs.isConnected());
+    imuIsCalibrating_nte.setBoolean(ahrs.isCalibrating());
+    imuYaw_nte.setDouble(ahrs.getYaw());
+    imuPitch_nte.setDouble(ahrs.getPitch());
+    imuRoll_nte.setDouble(ahrs.getRoll());
 
     /* Display tilt-corrected, Magnetometer-based heading (requires */
     /* magnetometer calibration to be useful) */
 
-    imuCompassHeader.setDouble(ahrs.getCompassHeading());
+    imuCompassHeader_nte.setDouble(ahrs.getCompassHeading());
 
     /* Display 9-axis Heading (requires magnetometer calibration to be useful) */
-    imuFusedHeading.setDouble(ahrs.getFusedHeading());
+    imuFusedHeading_nte.setDouble(ahrs.getFusedHeading());
 
     /* These functions are compatible w/the WPI Gyro Class, providing a simple */
     /* path for upgrading from the Kit-of-Parts gyro to the navx MXP */
 
-    imuTotalYaw.setDouble(ahrs.getAngle());
-    imuYawRateDPS.setDouble(ahrs.getRate());
+    imuTotalYaw_nte.setDouble(ahrs.getAngle());
+    imuYawRateDPS_nte.setDouble(ahrs.getRate());
 
     /* Display Processed Acceleration Data (Linear Acceleration, Motion Detect) */
 
-    imuAccelX.setDouble(ahrs.getWorldLinearAccelX());
-    imuAccelY.setDouble(ahrs.getWorldLinearAccelY());
-    imuIsMoving.setBoolean(ahrs.isMoving());
-    imuIsRotating.setBoolean(ahrs.isRotating());
+    imuAccelX_nte.setDouble(ahrs.getWorldLinearAccelX());
+    imuAccelY_nte.setDouble(ahrs.getWorldLinearAccelY());
+    imuIsMoving_nte.setBoolean(ahrs.isMoving());
+    imuIsRotating_nte.setBoolean(ahrs.isRotating());
 
     /* Display estimates of velocity/displacement. Note that these values are */
     /* not expected to be accurate enough for estimating robot position on a */
@@ -212,49 +212,49 @@ public class NavXIMU_Subsystem extends SubsystemBase {
     /* of these errors due to single (velocity) integration and especially */
     /* double (displacement) integration. */
 
-    velocityX.setDouble(ahrs.getVelocityX());
-    velocityY.setDouble(ahrs.getVelocityY());
-    displacementX.setDouble(ahrs.getDisplacementX());
-    displacementY.setDouble(ahrs.getDisplacementY());
+    velocityX_nte.setDouble(ahrs.getVelocityX());
+    velocityY_nte.setDouble(ahrs.getVelocityY());
+    displacementX_nte.setDouble(ahrs.getDisplacementX());
+    displacementY_nte.setDouble(ahrs.getDisplacementY());
 
     /* Display Raw Gyro/Accelerometer/Magnetometer Values */
     /* NOTE: These values are not normally necessary, but are made available */
     /* for advanced users. Before using this data, please consider whether */
     /* the processed data (see above) will suit your needs. */
 
-    rawGyroX.setDouble(ahrs.getRawGyroX());
-    rawGyroY.setDouble(ahrs.getRawGyroY());
-    rawGyroZ.setDouble(ahrs.getRawGyroZ());
-    rawAccelX.setDouble(ahrs.getRawAccelX());
-    rawAccelY.setDouble(ahrs.getRawAccelY());
-    rawAccelZ.setDouble(ahrs.getRawAccelZ());
-    rawMagX.setDouble(ahrs.getRawMagX());
-    rawMagY.setDouble(ahrs.getRawMagY());
-    rawMagZ.setDouble(ahrs.getRawMagZ());
-    imuTempC.setDouble(ahrs.getTempC());
-    imuTimestamp.setDouble(ahrs.getLastSensorTimestamp());
+    rawGyroX_nte.setDouble(ahrs.getRawGyroX());
+    rawGyroY_nte.setDouble(ahrs.getRawGyroY());
+    rawGyroZ_nte.setDouble(ahrs.getRawGyroZ());
+    rawAccelX_nte.setDouble(ahrs.getRawAccelX());
+    rawAccelY_nte.setDouble(ahrs.getRawAccelY());
+    rawAccelZ_nte.setDouble(ahrs.getRawAccelZ());
+    rawMagX_nte.setDouble(ahrs.getRawMagX());
+    rawMagY_nte.setDouble(ahrs.getRawMagY());
+    rawMagZ_nte.setDouble(ahrs.getRawMagZ());
+    imuTempC_nte.setDouble(ahrs.getTempC());
+    imuTimestamp_nte.setDouble(ahrs.getLastSensorTimestamp());
 
     /* Omnimount Yaw Axis Information */
     /* For more info, see http://navx-mxp.kauailabs.com/installation/omnimount */
     AHRS.BoardYawAxis yaw_axis = ahrs.getBoardYawAxis();
-    yawAxisDirection.setString(yaw_axis.up ? "Up" : "Down");
-    yawAxis.setDouble(yaw_axis.board_axis.getValue());
+    yawAxisDirection_nte.setString(yaw_axis.up ? "Up" : "Down");
+    yawAxis_nte.setDouble(yaw_axis.board_axis.getValue());
 
     /* Sensor Board Information */
-    firmwareVersion.setString(ahrs.getFirmwareVersion());
+    firmwareVersion_nte.setString(ahrs.getFirmwareVersion());
 
     /* Quaternion Data */
     /* Quaternions are fascinating, and are the most compact representation of */
     /* orientation data. All of the Yaw, Pitch and Roll Values can be derived */
     /* from the Quaternions. If interested in motion processing, knowledge of */
     /* Quaternions is highly recommended. */
-    quarternionW.setDouble(ahrs.getQuaternionW());
-    quarternionX.setDouble(ahrs.getQuaternionX());
-    quarternionY.setDouble(ahrs.getQuaternionY());
-    quarternionZ.setDouble(ahrs.getQuaternionZ());
+    quarternionW_nte.setDouble(ahrs.getQuaternionW());
+    quarternionX_nte.setDouble(ahrs.getQuaternionX());
+    quarternionY_nte.setDouble(ahrs.getQuaternionY());
+    quarternionZ_nte.setDouble(ahrs.getQuaternionZ());
 
     /* Connectivity Debugging Support */
-    imuByteCount.setDouble(ahrs.getByteCount());
-    imuUpdateCount.setDouble(ahrs.getUpdateCount());
+    imuByteCount_nte.setDouble(ahrs.getByteCount());
+    imuUpdateCount_nte.setDouble(ahrs.getUpdateCount());
   }
 }

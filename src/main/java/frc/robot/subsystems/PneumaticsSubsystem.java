@@ -23,20 +23,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PneumaticsSubsystem extends SubsystemBase {
   
-  private enum DoubleSolenoidNum {
-    DOUBLE_SOLENOID_1,
-    DOUBLE_SOLENOID_2,
-    DOUBLE_SOLENOID_3,
-    DOUBLE_SOLENOID_4
-  }
-
   private String tabTitle;
   
   private NetworkTableEntry compressor_nt;
 
   private final Compressor compressor = new Compressor();
 
-  private SendableChooser<Value> doubleSolenoidPositionChooser;
+  private List<SendableChooser<Value>> doubleSolenoidPositionChooserList;
 
   private final List<DoubleSolenoid> doubleSolenoidList = new ArrayList<DoubleSolenoid>(Arrays.asList(
     new DoubleSolenoid(1, 2),
@@ -59,16 +52,18 @@ public class PneumaticsSubsystem extends SubsystemBase {
                     .getEntry();
     
     // Initialize list of sendable chooser for the pistons //
-    doubleSolenoidPositionChooser = new SendableChooser<Value>();
-    doubleSolenoidPositionChooser.setDefaultOption("kOff", Value.kOff);
-    doubleSolenoidPositionChooser.addOption("kForward", Value.kForward);
-    doubleSolenoidPositionChooser.addOption("kReverse", Value.kReverse);
-
     for(int i = 1; i <= 4; i++){
+      SendableChooser<Value> doubleSolenoidPositionChooser = new SendableChooser<Value>();
+      doubleSolenoidPositionChooser.setDefaultOption("kOff", Value.kOff);
+      doubleSolenoidPositionChooser.addOption("kForward", Value.kForward);
+      doubleSolenoidPositionChooser.addOption("kReverse", Value.kReverse);
+      
       Shuffleboard
-        .getTab(tabTitle)
-        .add("Double Solenoid " + i, doubleSolenoidPositionChooser)
-        .withWidget(BuiltInWidgets.kComboBoxChooser);
+      .getTab(tabTitle)
+      .add("Double Solenoid " + i, doubleSolenoidPositionChooser)
+      .withWidget(BuiltInWidgets.kComboBoxChooser);
+      
+      doubleSolenoidPositionChooserList.add(doubleSolenoidPositionChooser);
     }
   }
 
@@ -81,9 +76,9 @@ public class PneumaticsSubsystem extends SubsystemBase {
   public void TestPneumatics(){
     compressor.setClosedLoopControl(compressor_nt.getBoolean(false));
     
-    for (int i = 1; i <= 4; i++) {
-      doubleSolenoidPositionChooser.getSelected();
-      doubleSolenoidList.get(i-1).set(Value.kForward);
+    for (int i = 0; i < 4; i++) {
+      Value setting = doubleSolenoidPositionChooserList.get(i).getSelected();
+      doubleSolenoidList.get(i).set(setting);
     }
   }
 }
