@@ -7,6 +7,10 @@
 
 package frc.robot.subsystems;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -23,81 +27,74 @@ import frc.robot.Constants;
 public class MotorControllerSubsystem extends SubsystemBase {
   
   /* Talon SRX */
-  private NetworkTableEntry talonSrx_1_nt;
-  private NetworkTableEntry talonSrx_2_nt;
-    
-  private final TalonSRX talonSrx_1 = new TalonSRX(Constants.TALONSRX_1);
-  private final TalonSRX talonSrx_2 = new TalonSRX(Constants.TALONSRX_2);
+  private List<NetworkTableEntry> talonSrxList_nte;
+  
+  private final List<TalonSRX> talonSrxList = new ArrayList<TalonSRX>(
+    Arrays.asList(
+      new TalonSRX(Constants.TALONSRX_1),
+      new TalonSRX(Constants.TALONSRX_2)
+    )
+  );
 
   /* Talon FX */
-  private NetworkTableEntry talonFx_1_nt;
-  private NetworkTableEntry talonFx_2_nt;
-  private NetworkTableEntry talonFx_3_nt;
-  private NetworkTableEntry talonFx_4_nt;
+  private List<NetworkTableEntry> talonFxList_nte;
 
-  private final TalonFX talonFx_1 = new TalonFX(Constants.TALONFX_1);
-  private final TalonFX talonFx_2 = new TalonFX(Constants.TALONFX_2);
-  private final TalonFX talonFx_3 = new TalonFX(Constants.TALONFX_3);
-  private final TalonFX talonFx_4 = new TalonFX(Constants.TALONFX_4);
+  private final List<TalonFX> talonFxList = new ArrayList<TalonFX>(
+    Arrays.asList(
+      new TalonFX(Constants.TALONFX_1),
+      new TalonFX(Constants.TALONFX_2),
+      new TalonFX(Constants.TALONFX_3),
+      new TalonFX(Constants.TALONFX_4)
+    )
+  );
 
   /* Spark MAX */
-  private NetworkTableEntry sparkMax_1_nt;
-  private NetworkTableEntry sparkMax_2_nt;
+  private List<NetworkTableEntry> sparkMaxList_nte;
 
-  private CANSparkMax sparkMax_1 = new CANSparkMax(Constants.SPARKMAX_1, MotorType.kBrushless);
-  private CANSparkMax sparkMax_2 = new CANSparkMax(Constants.SPARKMAX_2, MotorType.kBrushless);
+  private final List<CANSparkMax> sparkMaxList = new ArrayList<CANSparkMax>(
+    Arrays.asList(
+      new CANSparkMax(Constants.SPARKMAX_1, MotorType.kBrushless),
+      new CANSparkMax(Constants.SPARKMAX_2, MotorType.kBrushless)
+    )
+  );
 
   /**
    * Creates a new MotorControllerSubsystem.
    */
   public MotorControllerSubsystem() {
-    // Initialize Shuffleboard //
-    talonSrx_1_nt = Shuffleboard
-                    .getTab("Test Motor Controllers")
-                    .add("TalonSRX 1", 0)
-                    .withWidget(BuiltInWidgets.kNumberSlider)
-                    .getEntry();
-
-    talonSrx_2_nt = Shuffleboard
-                    .getTab("Test Motor Controllers")
-                    .add("TalonSRX 2", 0)
-                    .withWidget(BuiltInWidgets.kNumberSlider)
-                    .getEntry();
-
-    talonFx_1_nt = Shuffleboard
-                    .getTab("Test Motor Controllers")
-                    .add("TalonFX 1", 0)
-                    .withWidget(BuiltInWidgets.kNumberSlider)
-                    .getEntry();
-
-    talonFx_2_nt = Shuffleboard.getTab("Test Motor Controllers")
-                    .add("TalonFX 2", 0)
-                    .withWidget(BuiltInWidgets.kNumberSlider)
-                    .getEntry();
-
-    talonFx_3_nt = Shuffleboard
-                    .getTab("Test Motor Controllers")
-                    .add("TalonFX 3", 0)
-                    .withWidget(BuiltInWidgets.kNumberSlider)
-                    .getEntry();
-
-    talonFx_4_nt = Shuffleboard
-                    .getTab("Test Motor Controllers")
-                    .add("TalonFX 4", 0)
-                    .withWidget(BuiltInWidgets.kNumberSlider)
-                    .getEntry();
+    /* Initialize Shuffleboard */
     
-    sparkMax_1_nt = Shuffleboard
-                    .getTab("Test Motor Controllers")
-                    .add("SparkMax 1", 0)
-                    .withWidget(BuiltInWidgets.kNumberSlider)
-                    .getEntry();
+    // Add TalonSRX //
+    for(int i = 1; i <= 2; i++){
+      talonSrxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("TalonSRX " + i, 0)
+        .withWidget(BuiltInWidgets.kNumberSlider)
+        .getEntry()
+      );
+    }
 
-    sparkMax_2_nt = Shuffleboard
-                    .getTab("Test Motor Controllers")
-                    .add("SparkMax 2", 0)
-                    .withWidget(BuiltInWidgets.kNumberSlider)
-                    .getEntry();
+    // Add TalonFX //
+    for (int i = 1; i <= 4; i++) {
+      talonFxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("TalonFX " + i, 0)
+        .withWidget(BuiltInWidgets.kNumberSlider).getEntry()
+      );
+    }
+
+    // Add SparkMax //
+    for (int i = 1; i <= 2; i++) {
+      sparkMaxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("SparkMax " + i, 0)
+        .withWidget(BuiltInWidgets.kNumberSlider)
+        .getEntry()
+      );
+    }
   }
 
   @Override
@@ -108,17 +105,26 @@ public class MotorControllerSubsystem extends SubsystemBase {
 
   public void TestMotorController(){
     // Set TalonSRXs based on slider value from the Shuffleboard //
-    talonSrx_1.set(ControlMode.PercentOutput, talonSrx_1_nt.getDouble(0));
-    talonSrx_2.set(ControlMode.PercentOutput, talonSrx_2_nt.getDouble(0));
-
+    for (int i = 0; i < 2; i++) {
+      talonSrxList.get(i).set(
+        ControlMode.PercentOutput,
+        talonSrxList_nte.get(i).getDouble(0)
+      );
+    }
+    
     // Set TalonFXs based on slider value from the Shuffleboard //
-    talonFx_1.set(ControlMode.PercentOutput, talonFx_1_nt.getDouble(0));
-    talonFx_2.set(ControlMode.PercentOutput, talonFx_2_nt.getDouble(0));
-    talonFx_3.set(ControlMode.PercentOutput, talonFx_3_nt.getDouble(0));
-    talonFx_4.set(ControlMode.PercentOutput, talonFx_4_nt.getDouble(0));
+    for (int i = 0; i < 4; i++) {
+      talonFxList.get(i).set(
+        ControlMode.PercentOutput, 
+        talonFxList_nte.get(i).getDouble(0)
+      );
+    }
     
     // Set SparkMaxes based on slider value from the Shuffleboard //
-    sparkMax_1.set(sparkMax_1_nt.getDouble(0));
-    sparkMax_2.set(sparkMax_2_nt.getDouble(0));
+    for (int i = 0; i < 2; i++) {
+      sparkMaxList.get(i).set(
+        sparkMaxList_nte.get(i).getDouble(0)
+      );
+    }
   }
 }
