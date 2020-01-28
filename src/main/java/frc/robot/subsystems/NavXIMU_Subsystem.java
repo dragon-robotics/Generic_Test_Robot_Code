@@ -8,14 +8,11 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.kauailabs.navx.frc.AHRS.SerialDataType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
@@ -77,7 +74,7 @@ public class NavXIMU_Subsystem extends SubsystemBase {
    */
   public NavXIMU_Subsystem() {
     try {
-      ahrs = new AHRS(SerialPort.Port.kUSB1);
+      ahrs = new AHRS(SPI.Port.kMXP);
       ahrs.enableLogging(true);
       ahrs.zeroYaw();
 

@@ -62,9 +62,8 @@ public class MotorControllerSubsystem extends SubsystemBase {
    * Creates a new MotorControllerSubsystem.
    */
   public MotorControllerSubsystem() {
-    /* Initialize Shuffleboard */
     
-    // Add TalonSRX //
+    // Initialize TalonSRX //
     for(int i = 1; i <= 2; i++){
       talonSrxList_nte.add(
         Shuffleboard
@@ -75,7 +74,7 @@ public class MotorControllerSubsystem extends SubsystemBase {
       );
     }
 
-    // Add TalonFX //
+    // Initialize TalonFX //
     for (int i = 1; i <= 4; i++) {
       talonFxList_nte.add(
         Shuffleboard
@@ -85,7 +84,7 @@ public class MotorControllerSubsystem extends SubsystemBase {
       );
     }
 
-    // Add SparkMax //
+    // Initialize SparkMax //
     for (int i = 1; i <= 2; i++) {
       sparkMaxList_nte.add(
         Shuffleboard
@@ -104,27 +103,32 @@ public class MotorControllerSubsystem extends SubsystemBase {
   }
 
   public void TestMotorController(){
+    SetTalonSRX();
+    SetTalonFX();
+    SetSparkMax();
+  }
+
+  public void SetTalonSRX(){
     // Set TalonSRXs based on slider value from the Shuffleboard //
     for (int i = 0; i < 2; i++) {
-      talonSrxList.get(i).set(
-        ControlMode.PercentOutput,
-        talonSrxList_nte.get(i).getDouble(0)
-      );
+      talonSrxList.get(i).set(ControlMode.PercentOutput, talonSrxList_nte.get(i).getDouble(0));
     }
-    
+  }
+
+  public void SetTalonFX(){
     // Set TalonFXs based on slider value from the Shuffleboard //
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < talonFxList.size(); i++) {
       talonFxList.get(i).set(
         ControlMode.PercentOutput, 
         talonFxList_nte.get(i).getDouble(0)
       );
     }
-    
+  }
+
+  public void SetSparkMax(){
     // Set SparkMaxes based on slider value from the Shuffleboard //
-    for (int i = 0; i < 2; i++) {
-      sparkMaxList.get(i).set(
-        sparkMaxList_nte.get(i).getDouble(0)
-      );
+    for (int i = 0; i < sparkMaxList.size(); i++) {
+      sparkMaxList.get(i).set(sparkMaxList_nte.get(i).getDouble(0));
     }
   }
 }
