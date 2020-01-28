@@ -81,8 +81,15 @@ public class MotorControllerSubsystem extends SubsystemBase {
 
     // Add TalonSRX //
     for (int i = 1; i <= talonSrxList.size(); i++) {
-      talonSrxList_nte.add(Shuffleboard.getTab("Test Motor Controllers").add("TalonSRX " + i, 0)
-          .withWidget(BuiltInWidgets.kNumberSlider).getEntry());
+      talonSrxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("TalonSRX " + i, 0)
+        .withWidget(BuiltInWidgets.kNumberSlider)
+        .withSize(3, 1)
+        .withPosition(0, i)
+        .getEntry()
+      );
     }
   }
 
@@ -93,7 +100,7 @@ public class MotorControllerSubsystem extends SubsystemBase {
       talonSrxList.get(i).set(
         ControlMode.PercentOutput,
         talonSrxList_nte.get(i).getDouble(0)
-        );
+      );
     }
   }
   
@@ -109,18 +116,43 @@ public class MotorControllerSubsystem extends SubsystemBase {
     
     // Add TalonFX //
     for (int i = 1; i <= talonFxList.size(); i++) {
-      talonFxList_nte.add(Shuffleboard.getTab("Test Motor Controllers").add("TalonFX " + i, 0)
-          .withWidget(BuiltInWidgets.kNumberSlider).getEntry());
+      talonFxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("TalonFX " + i, 0)
+        .withWidget(BuiltInWidgets.kNumberSlider)
+        .withSize(3, 1)
+        .withPosition(3, (4 * i) - 3)
+        .getEntry()
+      );
 
       // Add TalonFX sensors //
-      talonFxList_nte
-          .add(Shuffleboard.getTab("Test Motor Controllers").add("TalonFX " + i + ": Absolute Position", 0).getEntry());
+      talonFxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("TalonFX " + i + ": Absolute Position", 0)
+        .withSize(3, 1)
+        .withPosition(3, (4 * i) - 2)
+        .getEntry()
+      );
 
-      talonFxList_nte
-          .add(Shuffleboard.getTab("Test Motor Controllers").add("TalonFX " + i + ": Position", 0).getEntry());
+      talonFxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("TalonFX " + i + ": Position", 0)
+        .withSize(3, 1)
+        .withPosition(3, (4 * i) - 1)
+        .getEntry()
+      );
 
-      talonFxList_nte
-          .add(Shuffleboard.getTab("Test Motor Controllers").add("TalonFX " + i + ": Velocity", 0).getEntry());
+      talonFxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("TalonFX " + i + ": Velocity", 0)
+        .withSize(3, 1)
+        .withPosition(3, (4 * i))
+        .getEntry()
+      );
     }
   }
 
@@ -145,8 +177,15 @@ public class MotorControllerSubsystem extends SubsystemBase {
 
     // Add SparkMax //
     for (int i = 1; i <= sparkMaxList.size(); i++) {
-      sparkMaxList_nte.add(Shuffleboard.getTab("Test Motor Controllers").add("SparkMax " + i, 0)
-          .withWidget(BuiltInWidgets.kNumberSlider).getEntry());
+      sparkMaxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("SparkMax " + i, 0)
+        .withWidget(BuiltInWidgets.kNumberSlider)
+        .withSize(3, 1)
+        .withPosition(6, i)
+        .getEntry()
+      );
     }
   }
 
