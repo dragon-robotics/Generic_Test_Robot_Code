@@ -19,6 +19,8 @@ public final class Constants {
     
     public static final int TALONSRX_1 = 1;
     public static final int TALONSRX_2 = 2;
+    public static final int TALONSRX_3 = 3;
+    public static final int TALONSRX_4 = 4;
 
     public static final int TALONFX_1 = 1;
     public static final int TALONFX_2 = 2;
