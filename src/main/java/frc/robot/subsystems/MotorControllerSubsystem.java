@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -24,9 +23,10 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;  // For joysticks
 
 public class MotorControllerSubsystem extends SubsystemBase {
-  
+
   /* Talon SRX */
   private List<NetworkTableEntry> talonSrxList_nte;
   private List<TalonSRX> talonSrxList;
@@ -38,6 +38,11 @@ public class MotorControllerSubsystem extends SubsystemBase {
   /* Spark MAX */
   private List<NetworkTableEntry> sparkMaxList_nte;
   private List<CANSparkMax> sparkMaxList;
+
+  /* 
+    @TODO: Create a configuration page for the user to setup testing scenario
+    @TODO: Separate each motor controller because the GUI is getting cluttered
+  */
 
   /**
    * Creates a new MotorControllerSubsystem.

@@ -8,11 +8,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.subsystems.Limelight_Subsystem;
 import frc.robot.subsystems.MotorControllerSubsystem;
 import frc.robot.subsystems.NavXIMU_Subsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -23,9 +25,35 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final MotorControllerSubsystem m_motorControllerSubsystem = new MotorControllerSubsystem();
-  private final PneumaticsSubsystem m_pneumaticsSubsystem = new PneumaticsSubsystem();
-  private final Limelight_Subsystem m_limelightSubsystem = new Limelight_Subsystem();
-  private final NavXIMU_Subsystem m_navXIMUSubsystem = new NavXIMU_Subsystem();
+  // private final PneumaticsSubsystem m_pneumaticsSubsystem = new PneumaticsSubsystem();
+  // private final Limelight_Subsystem m_limelightSubsystem = new Limelight_Subsystem();
+  // private final NavXIMU_Subsystem m_navXIMUSubsystem = new NavXIMU_Subsystem();
+
+    /* Robot Driver - AKA Driver 1 */
+    public static final Joystick j_stick_driver = new Joystick(Constants.J_STICK_DRIVER);  // Drive joystick (0) initialization
+    public static final JoystickButton j_stick_driver_LB = new JoystickButton(j_stick_driver, Constants.BUTTON_RIGHT);              // Left button
+    public static final JoystickButton j_stick_driver_RB = new JoystickButton(j_stick_driver, Constants.BUTTON_LEFT);               // Right button 
+    public static final JoystickButton j_stick_driver_X = new JoystickButton(j_stick_driver, Constants.BUTTON_X);                   // X button
+    public static final JoystickButton j_stick_driver_Y = new JoystickButton(j_stick_driver, Constants.BUTTON_Y);                   // Y button
+    public static final JoystickButton j_stick_driver_A = new JoystickButton(j_stick_driver, Constants.BUTTON_A);                   // A button
+    public static final JoystickButton j_stick_driver_B = new JoystickButton(j_stick_driver, Constants.BUTTON_B);                   // B button
+    public static final JoystickButton j_stick_driver_Back = new JoystickButton(j_stick_driver, Constants.BUTTON_BACK);             // Back button
+    public static final JoystickButton j_stick_driver_Start = new JoystickButton(j_stick_driver, Constants.BUTTON_START);           // Start button
+    public static final JoystickButton j_stick_driver_leftStick = new JoystickButton(j_stick_driver, Constants.BUTTON_LEFTSTICK);   // Left-Stick button
+    public static final JoystickButton j_stick_driver_rightStick = new JoystickButton(j_stick_driver, Constants.BUTTON_RIGHTSTICK); // Right-Stick button
+
+    /* Robot Controller - AKA Driver 2 */
+    public static final Joystick j_stick_control = new Joystick(Constants.J_STICK_CONTROL);  // Control joystick (1) initialization
+    public static final JoystickButton j_stick_control_LB = new JoystickButton(j_stick_control, Constants.BUTTON_RIGHT);              // Left button
+    public static final JoystickButton j_stick_control_RB = new JoystickButton(j_stick_control, Constants.BUTTON_LEFT);               // Right button 
+    public static final JoystickButton j_stick_control_X = new JoystickButton(j_stick_control, Constants.BUTTON_X);                   // X button
+    public static final JoystickButton j_stick_control_Y = new JoystickButton(j_stick_control, Constants.BUTTON_Y);                   // Y button
+    public static final JoystickButton j_stick_control_A = new JoystickButton(j_stick_control, Constants.BUTTON_A);                   // A button
+    public static final JoystickButton j_stick_control_B = new JoystickButton(j_stick_control, Constants.BUTTON_B);                   // B button
+    public static final JoystickButton j_stick_control_Back = new JoystickButton(j_stick_control, Constants.BUTTON_BACK);             // Back button
+    public static final JoystickButton j_stick_control_Start = new JoystickButton(j_stick_control, Constants.BUTTON_START);           // Start button
+    public static final JoystickButton j_stick_control_leftStick = new JoystickButton(j_stick_control, Constants.BUTTON_LEFTSTICK);   // Left-Stick button
+    public static final JoystickButton j_stick_control_rightStick = new JoystickButton(j_stick_control, Constants.BUTTON_RIGHTSTICK); // Right-Stick button
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
