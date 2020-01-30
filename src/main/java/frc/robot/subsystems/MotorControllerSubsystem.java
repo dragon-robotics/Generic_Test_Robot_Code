@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
@@ -52,15 +53,7 @@ public class MotorControllerSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     TestMotorController();        // Set Motor Controller(s)
     // UpdateTalonFXSensorValues();  // Update Talon FX sensor values
-  }
-
-  private void UpdateTalonFXSensorValues(){
-    for (int i = 0; i < talonFxList.size(); i+=4) {
-      talonFxList.get(i).set(
-        ControlMode.PercentOutput, 
-        talonFxList_nte.get(i).getDouble(0)
-      );
-    }
+    // UpdateSparkMaxSensorValues();  // Update SparkMax sensor values
   }
 
   private void TestMotorController(){
@@ -87,7 +80,7 @@ public class MotorControllerSubsystem extends SubsystemBase {
         .add("TalonSRX " + i, 0)
         .withWidget(BuiltInWidgets.kNumberSlider)
         .withSize(3, 1)
-        .withPosition(0, i)
+        .withPosition(0, (i-1))
         .getEntry()
       );
     }
@@ -122,7 +115,7 @@ public class MotorControllerSubsystem extends SubsystemBase {
         .add("TalonFX " + i, 0)
         .withWidget(BuiltInWidgets.kNumberSlider)
         .withSize(3, 1)
-        .withPosition(3, (4 * i) - 3)
+        .withPosition(3, (4 * i) - 4)
         .getEntry()
       );
 
@@ -132,7 +125,7 @@ public class MotorControllerSubsystem extends SubsystemBase {
         .getTab("Test Motor Controllers")
         .add("TalonFX " + i + ": Absolute Position", 0)
         .withSize(3, 1)
-        .withPosition(3, (4 * i) - 2)
+        .withPosition(3, (4 * i) - 3)
         .getEntry()
       );
 
@@ -141,7 +134,7 @@ public class MotorControllerSubsystem extends SubsystemBase {
         .getTab("Test Motor Controllers")
         .add("TalonFX " + i + ": Position", 0)
         .withSize(3, 1)
-        .withPosition(3, (4 * i) - 1)
+        .withPosition(3, (4 * i) - 2)
         .getEntry()
       );
 
@@ -150,7 +143,7 @@ public class MotorControllerSubsystem extends SubsystemBase {
         .getTab("Test Motor Controllers")
         .add("TalonFX " + i + ": Velocity", 0)
         .withSize(3, 1)
-        .withPosition(3, (4 * i))
+        .withPosition(3, (4 * i) - 1)
         .getEntry()
       );
     }
@@ -161,8 +154,21 @@ public class MotorControllerSubsystem extends SubsystemBase {
     for (int i = 0; i < talonFxList.size(); i++) {
       talonFxList.get(i).set(
         ControlMode.PercentOutput, 
-        talonFxList_nte.get(i).getDouble(0)
+        talonFxList_nte.get(4*i).getDouble(0)
       );
+    }
+  }
+
+  private void UpdateTalonFXSensorValues() {
+    for (int i = 0; i < talonFxList.size(); i += 4) {
+      TalonFXSensorCollection sensorCollection = talonFxList.get(i).getSensorCollection();
+      double absolute_position = sensorCollection.getIntegratedSensorAbsolutePosition();
+      double position = sensorCollection.getIntegratedSensorPosition();
+      double velocity = sensorCollection.getIntegratedSensorVelocity();
+
+      talonFxList_nte.get((4 * i) + 1).setDouble(absolute_position); // Update Absolute Position
+      talonFxList_nte.get((4 * i) + 2).setDouble(position); // Update Position
+      talonFxList_nte.get((4 * i) + 3).setDouble(velocity); // Update Velocity
     }
   }
 
@@ -177,13 +183,98 @@ public class MotorControllerSubsystem extends SubsystemBase {
 
     // Add SparkMax //
     for (int i = 1; i <= sparkMaxList.size(); i++) {
+      
+      // SparkMax Motor Controls //
       sparkMaxList_nte.add(
         Shuffleboard
         .getTab("Test Motor Controllers")
         .add("SparkMax " + i, 0)
         .withWidget(BuiltInWidgets.kNumberSlider)
         .withSize(3, 1)
-        .withPosition(6, i)
+        .withPosition(6, (9 * i) - 9)
+        .getEntry()
+      );
+
+      // Average Sampling Depth //
+      sparkMaxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("SparkMax " + i + ": Average Sampling Depth", 0)
+        .withSize(3, 1)
+        .withPosition(6, (9 * i) - 8)
+        .getEntry()
+      );
+
+      // Counts per Revolution //
+      sparkMaxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("SparkMax " + i + ": Counts Per Revolution", 0)
+        .withSize(3, 1)
+        .withPosition(6, (9 * i) - 7)
+        .getEntry()
+      );
+
+      // Sensor Phase //
+      sparkMaxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("SparkMax " + i + ": Sensor Phase", 0)
+        .withWidget(BuiltInWidgets.kBooleanBox)
+        .withSize(3, 1)
+        .withPosition(6, (9 * i) - 6)
+        .getEntry()
+      );
+
+      // Measurement Period //
+      sparkMaxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("SparkMax " + i + ": Measurement Period", 0)
+        .withSize(3, 1)
+        .withPosition(6, (9 * i) - 5)
+        .getEntry()
+      );
+
+      // Position //
+      sparkMaxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("SparkMax " + i + ": Position", 0)
+        .withSize(3, 1)
+        .withPosition(6, (9 * i) - 4)
+        .getEntry()
+      );
+
+      // Position Conversion Factor //
+      sparkMaxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("SparkMax " + i + ": Position Conversion Factor", 0)
+        .withSize(3, 1)
+        .withPosition(6, (9 * i) - 3)
+        .getEntry()
+      );
+      
+      // Velocity //
+      sparkMaxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("SparkMax " + i + ": Velocity", 0)
+        .withWidget(BuiltInWidgets.kNumberSlider)
+        .withSize(3, 1)
+        .withPosition(6, (9 * i) - 2)
+        .getEntry()
+      );
+      
+      // Velocity Conversion Factor //
+      sparkMaxList_nte.add(
+        Shuffleboard
+        .getTab("Test Motor Controllers")
+        .add("SparkMax " + i + ": Velocity Conversion Factor", 0)
+        .withWidget(BuiltInWidgets.kNumberSlider)
+        .withSize(3, 1)
+        .withPosition(6, (9 * i) - 1)
         .getEntry()
       );
     }
@@ -195,6 +286,12 @@ public class MotorControllerSubsystem extends SubsystemBase {
       sparkMaxList.get(i).set(
         sparkMaxList_nte.get(i).getDouble(0)
       );
+    }
+  }
+
+  private void UpdateSparkMaxSensorValues() {
+    for (int i = 0; i < talonFxList.size(); i += 4) {
+      talonFxList.get(i).set(ControlMode.PercentOutput, talonFxList_nte.get(i).getDouble(0));
     }
   }
 }
